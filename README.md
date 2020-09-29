@@ -24,9 +24,9 @@ Programa em que pode-se carregar simulações em 2D de corpos que geram a força
 
 1) Crie um arquivo .txt
 
-2) Escreva em cada linha um comando para alterar alguma propriedade como o valor da constante Gravitacional (G), a massa de planetas, suas cores, posições, etc...
+2) Escreva em cada linha um comando para alterar alguma propriedade, como o valor da constante Gravitacional (G), a massa de planetas, suas cores, posições, etc...
 
-3) Teste-o no simulador
+3) Teste-a no simulador
 
 ### Comandos 
 (Para números com vírgula(**,**), troque-a por ponto (**.**))
