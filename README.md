@@ -42,11 +42,16 @@ Programa em que pode-se carregar simulações em 2D de corpos que geram a força
 
 
 (Para escolher qual planeta será editado segue-se uma ordem que vai de 0 até o valor dado para gerar os planetas menos 1)
+
 ex:
 Criar 12
+
 1° Planeta = 0
+
 2° Planeta = 1
+
 ...
+
 Ultimo Planeta = 11
 
 #### [comando] [o que é] [valor]
