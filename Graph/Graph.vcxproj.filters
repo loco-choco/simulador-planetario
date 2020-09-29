@@ -23,7 +23,7 @@
     <None Include="..\..\..\..\Desktop\Salve Formato" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\Debug\planetas.txt">
+    <Text Include="..\Debug\3 em orbita.txt">
       <Filter>Arquivos de Origem</Filter>
     </Text>
   </ItemGroup>

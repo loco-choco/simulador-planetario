@@ -204,7 +204,13 @@ int main()
 {
 	//Lendo os arquivos
 
-	std::ifstream arquivo{ "C:/Users/ivanr/source/repos/Graph/Debug/planetas.txt" };
+	std::string caminhoDoArquivo{};
+
+	std::cout << "Qual simulacao voce quer carregar? (Escreva todo o caminho do arquivo, com as barras assim : / ) : "<<'\n';
+
+	std::getline(std::cin , caminhoDoArquivo);
+
+	std::ifstream arquivo{ caminhoDoArquivo };
 	std::string linha{};
 	std::string palavra{};
 	std::vector <std::string> comando{};
@@ -336,9 +342,9 @@ int main()
 		arquivo.close();
 	}
 	else
-		std::cout << "Nao consegui abrir o arquivo";
+		std::cout << "Nao consegui abrir o arquivo" << '\n';
 
-	std::cout << constG;
+	
 	
 
 	sf::ContextSettings settings;

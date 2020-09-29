@@ -1,0 +1,29 @@
+Criar 3
+
+Tamanho 0 0.1
+
+Posicao 0 0.97000436 -0.24308753
+
+Cor 0 255 0 0
+
+Velocidade 0 0.466203685 0.4323655
+
+
+
+Tamanho 1 0.1
+
+Posicao 1 -0.97000436 0.24308753
+
+Cor 1 0 255 0
+
+Velocidade 1 0.466203685 0.4323655
+
+
+
+Tamanho 2 0.1
+
+Cor 2 0 0 255
+
+Posicao 2 0 0
+
+Velocidade 2 -0.93240737 -0.864731
