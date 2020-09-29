@@ -3,7 +3,7 @@ Programa em que pode-se carregar simulações em 2D de corpos que geram a força
 
 ## Como Instalar
 
-1) Clique no botão **CODE** e clique em **Dowload ZIP**, isso ira baixar todos os aquivos do repositório em um .zip
+1) Clique no botão **Code** e clique em **Dowload ZIP**, isso ira baixar todos os aquivos do repositório em um .zip
 
 ![Botão CODE com Dowaload ZIP](https://github.com/ShoosGun/simulador-planetario/blob/master/Imagens%20do%20README/CODE.jpg)
 
