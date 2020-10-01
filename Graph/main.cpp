@@ -199,6 +199,39 @@ void DesenharTodos(const std::vector <Planeta *> &planetas,  sf::RenderWindow &w
 }
 //--
 
+//Gerar o Hash code de strings
+long long GerarHash(std::string const& s) 
+{
+	const int p = 53;
+	const int m = 1e9 + 9;
+	long long hash_value = 0;
+	long long p_pow = 1;
+	for (char c : s) {
+		hash_value = (hash_value + (c - 'a' + 1) * p_pow) % m;
+		p_pow = (p_pow * p) % m;
+	}
+	return hash_value;
+}
+
+struct  ComandosDeSimulacaoEnum
+{
+
+	long long Criar = GerarHash("Criar");
+	long long G = GerarHash("G");
+	long long deltaTime = GerarHash("deltaTime");
+	long long fps = GerarHash("deltaTime");
+
+	long long Posicao = GerarHash("Posicao");
+	long long Velocidade = GerarHash("Velocidade");
+
+
+	long long Massa = GerarHash("Massa");
+	long long Tamanho = GerarHash("Tamanho");
+	long long Cor = GerarHash("Cor");
+};
+
+ComandosDeSimulacaoEnum ComandosDeSimulação;
+
 
 int main()
 {
@@ -228,6 +261,7 @@ int main()
 	{
 		while (std::getline(arquivo, linha)) // Estrutura: [comando] [o que é] [valor] ou [comando] [valor] ou [o que é] [valor] ou tudo igual mas ... [valor 1] [valor 2]
 		{
+			int tamanhoDoVector{ 0 };
 			
 			while ((posicao = linha.find(' ')) != std::string::npos)
 			{
@@ -236,106 +270,106 @@ int main()
 				linha.erase(0, posicao + 1);
 
 				comando.push_back(palavra);
+
+				tamanhoDoVector++;
 			}
+			long long hashDoComando{0};
 
-			try 
-			{
+			if (tamanhoDoVector > 0)
+				hashDoComando = GerarHash(comando[0]);
+			
 				//Comando de 2 parametros: [comando] [valor] ou [o que é] [valor] 
-				//Eu sei, "mais que belo e otimizado código  temos aki"
-				if (comando.size() == 1) 
+				//Tentar descobrir uma maneira mais eficiente de comparar os valores
+
+			if (tamanhoDoVector == 1) 
+			{
+
+				if(hashDoComando == ComandosDeSimulação.G)
+					constG = std::stof(linha);
+					
+				else if (hashDoComando == ComandosDeSimulação.fps)
+					fps = std::stoi(linha);
+				
+				else if(hashDoComando == ComandosDeSimulação.deltaTime)
+					deltaTime = std::stof(linha);
+					
+				else if (hashDoComando == ComandosDeSimulação.Criar)
 				{
-					if (comando[0].compare("G") == 0)
+					int numeroDePlanetas{ std::stoi(linha) };
+					while (numeroDePlanetas > 0)
 					{
-						constG = std::stof(linha);
-					}
-
-					if (comando[0].compare("fps") == 0)
-					{
-						fps = std::stoi(linha);
-					}
-
-					if (comando[0].compare("deltaTime") == 0)
-					{
-						deltaTime = 1/std::stof(linha);
-					}
-
-					if (comando[0].compare("Criar") == 0)
-					{
-						int numeroDePlanetas{ std::stoi(linha) };
-						while (numeroDePlanetas > 0)
-						{
 							
-							planetas.push_back(new Planeta(*new sf::CircleShape()));
-							numeroDePlanetas--;
-						}
+						planetas.push_back(new Planeta(*new sf::CircleShape()));
+						numeroDePlanetas--;
 					}
-
 				}
+
+			}
 				//[comando] [o que é] [valor]
 				
-				if (comando.size() == 2)
-				{
+			else if (tamanhoDoVector == 2)
+			{
 					
-					if (comando[0].compare("Massa") == 0)
-					{
-						if (planetas.size() >= std::stoi(comando[1]))
-							planetas[std::stoi(comando[1])]->setMassa(std::stof(linha));
-
-					}
-
-					if (comando[0].compare("Tamanho") == 0)
-					{
-						if (planetas.size() >= std::stoi(comando[1])) 
-						{
-							planetas[std::stoi(comando[1])]->m_planeta->setRadius(std::stof(linha)); 
-
-							planetas[std::stoi(comando[1])]->m_planeta->setOrigin(std::stof(linha), std::stof(linha));
-						}
-					}
-
-
+				if (hashDoComando == ComandosDeSimulação.Massa) 
+				{
+					if (planetas.size() >= std::stoi(comando[1]))
+						planetas[std::stoi(comando[1])]->setMassa(std::stof(linha));
 				}
+					
+
+				if (hashDoComando == ComandosDeSimulação.Tamanho)
+				{
+					if (planetas.size() >= std::stoi(comando[1])) 
+					{
+						planetas[std::stoi(comando[1])]->m_planeta->setRadius(std::stof(linha)); 
+						planetas[std::stoi(comando[1])]->m_planeta->setOrigin(std::stof(linha), std::stof(linha));
+					}
+				}
+
+
+			}
 
 				//[comando] [o que é] [valor 1] [valor 2]
 
-				if(comando.size() == 3)
+			else if(tamanhoDoVector == 3)
+			{
+				if (hashDoComando == ComandosDeSimulação.Posicao)
 				{
-					if (comando[0].compare("Posicao") == 0)
-					{
-						if (planetas.size() >= std::stoi(comando[1]))
-							planetas[std::stoi(comando[1])]->m_planeta->setPosition(sf::Vector2f(std::stof(comando[2]), std::stof(linha)) + origem);
-
-
-					}
-
-					if (comando[0].compare("Velocidade") == 0)
-					{
-						if (planetas.size() >= std::stoi(comando[1]))
-							planetas[std::stoi(comando[1])]->setVelocidade(std::stof(comando[2]), std::stof(linha));
-
-
-					}
+					if (planetas.size() >= std::stoi(comando[1]))
+						planetas[std::stoi(comando[1])]->m_planeta->setPosition(sf::Vector2f(std::stof(comando[2]), std::stof(linha)) + origem);
 				}
+
+				if (hashDoComando == ComandosDeSimulação.Velocidade)
+				{
+					if (planetas.size() >= std::stoi(comando[1]))
+						planetas[std::stoi(comando[1])]->setVelocidade(std::stof(comando[2]), std::stof(linha));
+				}
+			}
 
 				//[comando] [o que é] [valor 1] [valor 2] [valor 3]
-				if (comando.size() == 4)
+			else if (tamanhoDoVector == 4)
+			{	
+				if (hashDoComando == ComandosDeSimulação.Cor)				
+				{					
+					if (planetas.size() >= std::stoi(comando[1]))						
+						planetas[std::stoi(comando[1])]->m_planeta->setFillColor(sf::Color(std::stoi(comando[2]), std::stoi(comando[3]),std::stoi(linha)));
+										   				
+				}
+
+			}
+
+				//[comando] [o que é] [valor 1] [valor 2] [valor 3] [valor 4]
+			else if (tamanhoDoVector == 5)
+			{
+				if (hashDoComando == ComandosDeSimulação.Cor)
 				{
-					if (comando[0].compare("Cor") == 0)
-					{
-						if (planetas.size() >= std::stoi(comando[1]))
-							planetas[std::stoi(comando[1])]->m_planeta->setFillColor(sf::Color(std::stoi(comando[2]),std::stoi(comando[3]), std::stoi(linha)) );
+					if (planetas.size() >= std::stoi(comando[1]))
+						planetas[std::stoi(comando[1])]->m_planeta->setFillColor(sf::Color(std::stoi(comando[2]),std::stoi(comando[3]), std::stoi(comando[4]), std::stoi(linha)) );
 
 
-					}
 				}
 			}
-			catch(std::exception e)
-			{
-				std::cout << "Deu erro" << e.what();
-			}
-
 			
-
 			comando.clear();
 		}
 
